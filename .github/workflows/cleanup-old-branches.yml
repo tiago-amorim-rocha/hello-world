@@ -2,7 +2,7 @@ name: Cleanup old Claude branches
 
 on:
   schedule:
-    # Run at 3am UTC every day
+    # Run at 1am UTC every day
     - cron: '0 3 * * *'
   workflow_dispatch: # Allow manual triggering
 
