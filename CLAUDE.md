@@ -10,12 +10,7 @@ This is a template repository with built-in GitHub Pages deployment and cache bu
 - Automatically merges `claude/**` branches into `main` when pushed
 - Enables seamless CI/CD workflow with Claude Code
 
-### 2. GitHub Pages Deployment
-- **File**: `.github/workflows/pages.yml`
-- Automatically deploys to GitHub Pages on push to `main`
-- Includes version.txt generation during build
-
-### 3. Cache Busting System
+### 2. Cache Busting System
 - **File**: `version.txt` - Contains timestamp for cache invalidation
 - **Implementation**: `index.html` - Auto-versioned module loader
 - Ensures browsers always load the latest version of modules
@@ -38,8 +33,8 @@ s.src = `./main.js?v=${encodeURIComponent(version)}`;
 document.head.appendChild(s);
 ```
 
-### Optional: Pre-commit Hook
-To automatically update `version.txt` on each commit, create `.git/hooks/pre-commit`:
+### Pre-commit Hook (Recommended)
+Automatically update `version.txt` on each commit by creating `.git/hooks/pre-commit`:
 
 ```bash
 #!/bin/sh
@@ -49,6 +44,11 @@ git add version.txt
 ```
 
 Make it executable: `chmod +x .git/hooks/pre-commit`
+
+**Why pre-commit over post-commit?**
+- Pre-commit includes the version.txt update IN the same commit
+- Post-commit would require a second commit to save the version change
+- Cleaner git history and ensures version.txt is always in sync
 
 ## Usage
 
@@ -60,8 +60,8 @@ Make it executable: `chmod +x .git/hooks/pre-commit`
 
 ### Deployment
 1. Enable GitHub Pages in repository settings
-2. Set source to "GitHub Actions"
-3. Push to `main` branch to deploy
+2. Set source to "Deploy from a branch" (select main branch)
+3. Push to `main` to deploy
 
 ## Customization
 
@@ -80,8 +80,9 @@ s.src = `./your-module.js?v=${encodeURIComponent(v)}`;
 ```
 .
 ├── .github/workflows/
-│   ├── autopromote.yml    # Auto-merge claude/** branches
-│   └── pages.yml          # GitHub Pages deployment
+│   └── autopromote.yml    # Auto-merge claude/** branches
+├── .git/hooks/
+│   └── pre-commit         # Updates version.txt (create manually)
 ├── CLAUDE.md              # This file - project context for Claude
 ├── README.md              # User-facing documentation
 ├── index.html             # Entry point with cache busting
