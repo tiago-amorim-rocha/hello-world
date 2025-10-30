@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Write version.txt (commit SHA + UTC time)
-        run: echo "${{ github.sha }} $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > version.txt
       - uses: actions/upload-pages-artifact@v3
         with:
           path: "."
