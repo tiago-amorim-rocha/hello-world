@@ -10,7 +10,14 @@ This is a template repository with built-in GitHub Pages deployment and cache bu
 - Automatically merges `claude/**` branches into `main` when pushed
 - Enables seamless CI/CD workflow with Claude Code
 
-### 2. Cache Busting System
+### 2. Branch Cleanup Workflow
+- **File**: `.github/workflows/cleanup-old-branches.yml`
+- Runs daily at 3am UTC to delete old `claude/**` branches
+- Only deletes branches older than 24 hours
+- Keeps your repository clean from stale Claude Code branches
+- Can be triggered manually via GitHub Actions UI
+
+### 3. Cache Busting System
 - **File**: `version.txt` - Contains timestamp for cache invalidation
 - **Implementation**: `index.html` - Auto-versioned module loader
 - Ensures browsers always load the latest version of modules
@@ -80,11 +87,12 @@ s.src = `./your-module.js?v=${encodeURIComponent(v)}`;
 ```
 .
 ├── .github/workflows/
-│   └── autopromote.yml    # Auto-merge claude/** branches
+│   ├── autopromote.yml           # Auto-merge claude/** branches
+│   └── cleanup-old-branches.yml  # Daily cleanup of old claude branches
 ├── .git/hooks/
-│   └── pre-commit         # Updates version.txt (create manually)
-├── CLAUDE.md              # This file - project context for Claude
-├── README.md              # User-facing documentation
-├── index.html             # Entry point with cache busting
-└── version.txt            # Build version timestamp
+│   └── pre-commit                # Updates version.txt (create manually)
+├── CLAUDE.md                     # This file - project context for Claude
+├── README.md                     # User-facing documentation
+├── index.html                    # Entry point with cache busting
+└── version.txt                   # Build version timestamp
 ```
