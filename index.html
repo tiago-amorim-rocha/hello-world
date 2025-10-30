@@ -46,11 +46,11 @@
       window.__BUILD = v;
       document.getElementById('version').textContent = v;
 
-      // Example: Load a main module with cache busting
-      // const s = document.createElement('script');
-      // s.type = 'module';
-      // s.src = `./main.js?v=${encodeURIComponent(v)}`;
-      // document.head.appendChild(s);
+      // Load main module with cache busting
+      const s = document.createElement('script');
+      s.type = 'module';
+      s.src = `./main.js?v=${encodeURIComponent(v)}`;
+      document.head.appendChild(s);
     } catch (err) {
       console.warn('version.txt missing, using fallback timestamp');
       const fallback = String(Date.now());

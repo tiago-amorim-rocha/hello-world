@@ -11,8 +11,8 @@ A template repository with GitHub Pages deployment and cache busting for web pro
 ## Quick Start
 
 1. Use this template to create a new repository
-2. Enable GitHub Pages (Settings → Pages → Source: GitHub Actions)
-3. Add your JavaScript modules and reference them in `index.html`
+2. Enable GitHub Pages (Settings → Pages → Source: Deploy from a branch)
+3. Edit `main.js` to build your application
 4. Push to `main` to deploy
 
 ## Cache Busting
