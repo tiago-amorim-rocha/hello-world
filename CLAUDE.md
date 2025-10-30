@@ -83,7 +83,6 @@ Make it executable: `chmod +x .git/hooks/pre-commit`
 ### Update Metadata
 - Change page title in `index.html`
 - Update this CLAUDE.md with your project architecture
-- Modify README.md with user-facing documentation
 
 ### Add Modules
 The template includes `main.js` as a starter file. To add more modules:
@@ -114,7 +113,6 @@ To disable the console in production, simply remove the `console.js` import and 
 │   └── pre-commit                # Updates version.txt (create manually)
 ├── .gitignore                    # Git ignore patterns
 ├── CLAUDE.md                     # This file - project context for Claude
-├── README.md                     # User-facing documentation
 ├── index.html                    # Entry point with cache busting
 ├── main.js                       # Main application module (starter file)
 ├── console.js                    # In-page debug console
