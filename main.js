@@ -3,15 +3,14 @@
 
 import * as debugConsole from './console.js';
 
-console.log('🚀 Application loaded!');
-console.log('📦 Build version:', window.__BUILD || 'unknown');
-
 // Example: Initialize your app
 function init() {
-  console.log('✨ Initializing application...');
-
-  // Initialize debug console
+  // Initialize debug console FIRST
   debugConsole.init();
+
+  console.log('🚀 Application loaded!');
+  console.log('📦 Build version:', window.__BUILD || 'unknown');
+  console.log('✨ Initializing application...');
 
   // Your application code here
   // Example: Update UI, set up event listeners, etc.

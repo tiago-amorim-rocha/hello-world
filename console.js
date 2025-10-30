@@ -21,6 +21,11 @@ function init() {
     isOpen = !isOpen;
     panel.style.display = isOpen ? 'flex' : 'none';
     toggle.textContent = isOpen ? '✕' : '🐛';
+
+    // Render messages when opening
+    if (isOpen) {
+      renderMessages();
+    }
   });
 
   // Clear console
