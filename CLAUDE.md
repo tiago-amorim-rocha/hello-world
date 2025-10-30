@@ -23,6 +23,14 @@ This is a template repository with built-in GitHub Pages deployment and cache bu
 - Ensures browsers always load the latest version of modules
 - Uses `?v=<timestamp>` query parameter on module imports
 
+### 4. In-Page Debug Console
+- **File**: `console.js` - Debug console module
+- Floating 🐛 button in bottom-right corner
+- Captures console.log, console.info, console.debug, console.warn, console.error
+- Displays messages with timestamps and color coding
+- Keeps last 100 messages in history
+- Useful for debugging on mobile devices or when DevTools isn't available
+
 ## How It Works
 
 ### Cache Busting
@@ -88,6 +96,14 @@ The template includes `main.js` as a starter file. To add more modules:
 
 Note: Only `main.js` needs explicit cache busting in `index.html`. Other modules imported via ES6 `import` inherit the cache-busted URL automatically.
 
+### Debug Console
+Click the 🐛 button in the bottom-right corner to open the debug console. All console output (log, info, debug, warn, error) will be captured and displayed here. This is especially useful for:
+- Debugging on mobile devices
+- When browser DevTools aren't available
+- Quick in-page console access during development
+
+To disable the console in production, simply remove the `console.js` import and initialization from `main.js`.
+
 ## Structure
 ```
 .
@@ -96,9 +112,11 @@ Note: Only `main.js` needs explicit cache busting in `index.html`. Other modules
 │   └── cleanup-old-branches.yml  # Daily cleanup of old claude branches
 ├── .git/hooks/
 │   └── pre-commit                # Updates version.txt (create manually)
+├── .gitignore                    # Git ignore patterns
 ├── CLAUDE.md                     # This file - project context for Claude
 ├── README.md                     # User-facing documentation
 ├── index.html                    # Entry point with cache busting
 ├── main.js                       # Main application module (starter file)
+├── console.js                    # In-page debug console
 └── version.txt                   # Build version timestamp
 ```
