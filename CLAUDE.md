@@ -1,7 +1,7 @@
-# Project Template
+# iOS Game Template
 
 ## Overview
-This is a template repository with built-in GitHub Pages deployment and cache busting for web projects.
+This is a template repository optimized for building web games for iOS devices. Designed to run as a PWA (Progressive Web App) via "Add to Home Screen" in Safari. Includes GitHub Pages deployment, cache busting, and iOS-specific optimizations for safe areas, keyboard handling, and touch interactions.
 
 ## Features
 
@@ -31,7 +31,29 @@ This is a template repository with built-in GitHub Pages deployment and cache bu
 - Keeps last 100 messages in history
 - Useful for debugging on mobile devices or when DevTools isn't available
 
+### 5. iOS Game Optimizations
+- **PWA Support**: manifest.json for "Add to Home Screen" functionality
+- **Safe Area Handling**: Automatic padding for notch, home indicator, and device edges
+- **Keyboard Protection**: Fixed viewport prevents keyboard from resizing game area
+- **Touch Optimizations**:
+  - Disabled double-tap zoom (`touch-action: manipulation`)
+  - Disabled text selection and callouts
+  - Disabled tap highlights
+  - Prevented pull-to-refresh
+- **Fullscreen Mode**: Runs standalone without Safari UI when launched from home screen
+
 ## How It Works
+
+### iOS Safe Areas
+The template uses CSS `env(safe-area-inset-*)` to respect device safe areas:
+- **Notch area** (top)
+- **Home indicator** (bottom)
+- **Screen edges** (left/right on landscape)
+
+All UI elements (including debug console) are positioned with safe area awareness.
+
+### Keyboard Handling
+Using `position: fixed` on html/body prevents the virtual keyboard from resizing the viewport. The game canvas remains at full size even when the keyboard appears.
 
 ### Cache Busting
 The `index.html` includes a script that:
@@ -77,11 +99,14 @@ Make it executable: `chmod +x .git/hooks/pre-commit`
 1. Enable GitHub Pages in repository settings
 2. Set source to "Deploy from a branch" (select main branch)
 3. Push to `main` to deploy
+4. On iOS: Open in Safari → Share → Add to Home Screen
+5. Launch from home screen for fullscreen PWA experience
 
 ## Customization
 
 ### Update Metadata
-- Change page title in `index.html`
+- Change page title and app name in `index.html` and `manifest.json`
+- Replace `icon-512.svg` with your game's icon
 - Update this CLAUDE.md with your project architecture
 
 ### Add Modules
@@ -113,8 +138,10 @@ To disable the console in production, simply remove the `console.js` import and 
 │   └── pre-commit                # Updates version.txt (create manually)
 ├── .gitignore                    # Git ignore patterns
 ├── CLAUDE.md                     # This file - project context for Claude
-├── index.html                    # Entry point with cache busting
+├── index.html                    # Entry point with iOS optimizations
 ├── main.js                       # Main application module (starter file)
 ├── console.js                    # In-page debug console
+├── manifest.json                 # PWA manifest for iOS home screen
+├── icon-512.svg                  # App icon (replace with your own)
 └── version.txt                   # Build version timestamp
 ```
