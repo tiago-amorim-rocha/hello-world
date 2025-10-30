@@ -1,64 +1,89 @@
-# Hello World - Letter Ball Physics Game
+# Project Template
 
-## Quick Context
-A physics-based game where letter balls (A-Z) drop from above and settle using Matter.js. Ball size and mass correlate with letter frequency in English.
+## Overview
+This is a template repository with built-in GitHub Pages deployment and cache busting for web projects.
 
-## Architecture (5 modules + 1 main)
+## Features
 
+### 1. Auto-promotion Workflow
+- **File**: `.github/workflows/autopromote.yml`
+- Automatically merges `claude/**` branches into `main` when pushed
+- Enables seamless CI/CD workflow with Claude Code
+
+### 2. GitHub Pages Deployment
+- **File**: `.github/workflows/pages.yml`
+- Automatically deploys to GitHub Pages on push to `main`
+- Includes version.txt generation during build
+
+### 3. Cache Busting System
+- **File**: `version.txt` - Contains timestamp for cache invalidation
+- **Implementation**: `index.html` - Auto-versioned module loader
+- Ensures browsers always load the latest version of modules
+- Uses `?v=<timestamp>` query parameter on module imports
+
+## How It Works
+
+### Cache Busting
+The `index.html` includes a script that:
+1. Fetches `version.txt` (bypassing cache)
+2. Uses the version to append `?v=<version>` to module imports
+3. Falls back to `Date.now()` if version.txt is unavailable
+
+Example:
+```javascript
+// Loads: ./main.js?v=1761844854000
+const s = document.createElement('script');
+s.type = 'module';
+s.src = `./main.js?v=${encodeURIComponent(version)}`;
+document.head.appendChild(s);
 ```
-index.html          - Entry point, loads game.js as ES6 module
-├── config.js       - All constants (physics, spawning, sizes)
-├── debugConsole.js - Debug UI with physics controls (self-contained)
-├── letterBag.js    - Letter distribution & bag management (Scrabble-like)
-├── physics.js      - Matter.js engine setup & physics helpers
-└── game.js         - Main: canvas, spawning, rendering, coordination
+
+### Optional: Pre-commit Hook
+To automatically update `version.txt` on each commit, create `.git/hooks/pre-commit`:
+
+```bash
+#!/bin/sh
+# Update version.txt with current timestamp
+date +%s%3N > version.txt
+git add version.txt
 ```
 
-## Key Systems
+Make it executable: `chmod +x .git/hooks/pre-commit`
 
-### Letter Bag System
-- 100-letter pool optimized for word formation (32% vowels, 68% consonants)
-- Reduced vowel ratio vs Scrabble (32% vs 42%) for better variety with 40 balls on screen
-- Letters can be drawn and returned (for future word removal feature)
-- Exposed as `window.letterBag`
+## Usage
 
-### Physics (Matter.js)
-- Gravity: 0.5 (customizable via debug console)
-- Bounce: 0.5 (restitution)
-- Friction: 0.15 (surface), 0.02 (air)
-- Sleep threshold: 60 (balls rest when nearly motionless)
-- Mass scales with ball size (density ∝ radius)
+### As a Template
+1. Use this repository as a template for new projects
+2. Update this CLAUDE.md with project-specific details
+3. Add your source files (JS modules, CSS, etc.)
+4. The cache busting and deployment workflows are ready to use
 
-### Ball Properties
-- Radius: 30-45px (based on bag count: E=12 largest, Q/K/J/X=1 smallest)
-- Color: Consistent per letter (HSL based on alphabet position)
-- Spawning: Drop from above, collision-checked, 50ms intervals
-- Size directly correlates with bag distribution (simpler, single source of truth)
+### Deployment
+1. Enable GitHub Pages in repository settings
+2. Set source to "GitHub Actions"
+3. Push to `main` branch to deploy
 
-### Debug Console
-- Toggle: Click 🐛 button (bottom-right)
-- Live physics adjustment (gravity, friction, bounce)
-- Console output capture
+## Customization
 
-## Recent Changes
-- Removed tap-to-force explosion mechanic
-- Refactored into modular architecture (5 modules + main)
-- Removed LETTER_FREQUENCY - ball size now based on bag distribution only
-- Physics stability improvements (reduced jitter, better settling)
-- Mass scales with ball size for realistic interactions
-- Gravity at 1.0, bounce at 0.8
+### Update Metadata
+- Change page title in `index.html`
+- Update this CLAUDE.md with your project architecture
+- Modify README.md with user-facing documentation
 
-## How to Update This File
-**Update when:**
-- Adding/removing modules
-- Changing core architecture or systems
-- Major physics/gameplay adjustments
-- Adding new features (word formation, scoring, etc.)
+### Add Modules
+Reference your modules in index.html with the cache busting pattern:
+```javascript
+s.src = `./your-module.js?v=${encodeURIComponent(v)}`;
+```
 
-**Don't update for:**
-- Minor tweaks to constants
-- Bug fixes
-- Code refactoring within same module
-- Small physics adjustments
-
-Keep this file under 100 lines - focus on WHAT and WHY, not HOW.
+## Structure
+```
+.
+├── .github/workflows/
+│   ├── autopromote.yml    # Auto-merge claude/** branches
+│   └── pages.yml          # GitHub Pages deployment
+├── CLAUDE.md              # This file - project context for Claude
+├── README.md              # User-facing documentation
+├── index.html             # Entry point with cache busting
+└── version.txt            # Build version timestamp
+```
