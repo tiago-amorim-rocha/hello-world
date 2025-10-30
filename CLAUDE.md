@@ -62,7 +62,7 @@ Make it executable: `chmod +x .git/hooks/pre-commit`
 ### As a Template
 1. Use this repository as a template for new projects
 2. Update this CLAUDE.md with project-specific details
-3. Add your source files (JS modules, CSS, etc.)
+3. Edit `main.js` to build your application (or add more modules)
 4. The cache busting and deployment workflows are ready to use
 
 ### Deployment
@@ -78,10 +78,15 @@ Make it executable: `chmod +x .git/hooks/pre-commit`
 - Modify README.md with user-facing documentation
 
 ### Add Modules
-Reference your modules in index.html with the cache busting pattern:
-```javascript
-s.src = `./your-module.js?v=${encodeURIComponent(v)}`;
-```
+The template includes `main.js` as a starter file. To add more modules:
+
+1. Create your module file (e.g., `utils.js`)
+2. Import it in `main.js`:
+   ```javascript
+   import { myFunction } from './utils.js';
+   ```
+
+Note: Only `main.js` needs explicit cache busting in `index.html`. Other modules imported via ES6 `import` inherit the cache-busted URL automatically.
 
 ## Structure
 ```
@@ -94,5 +99,6 @@ s.src = `./your-module.js?v=${encodeURIComponent(v)}`;
 ├── CLAUDE.md                     # This file - project context for Claude
 ├── README.md                     # User-facing documentation
 ├── index.html                    # Entry point with cache busting
+├── main.js                       # Main application module (starter file)
 └── version.txt                   # Build version timestamp
 ```
