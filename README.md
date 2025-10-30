@@ -4,9 +4,10 @@ A template repository with GitHub Pages deployment and cache busting for web pro
 
 ## Features
 
-- **Auto-deployment** to GitHub Pages on push to main
+- **GitHub Pages** deployment from main branch
 - **Cache busting** system for reliable module updates
 - **Auto-promotion** workflow for Claude Code integration
+- **In-page debug console** for easy mobile debugging
 
 ## Quick Start
 
