@@ -4,7 +4,7 @@
 import * as debugConsole from './console.js';
 
 // Version checking configuration
-const VERSION_CHECK_INTERVAL = 30000; // Check every 30 seconds
+const VERSION_CHECK_INTERVAL = 2000; // Check every 2 seconds
 let currentVersion = window.__BUILD || 'unknown';
 
 // Check for version updates
