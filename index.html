@@ -181,6 +181,39 @@
     #console-output::-webkit-scrollbar-thumb:hover {
       background: #444;
     }
+
+    /* Reload button styles */
+    #reload-button {
+      position: fixed;
+      bottom: calc(20px + env(safe-area-inset-bottom));
+      right: calc(80px + env(safe-area-inset-right));
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e74c3c;
+      border: 2px solid #c0392b;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    }
+    #reload-button:hover {
+      background: #c0392b;
+      transform: scale(1.1);
+    }
+    #reload-button.show {
+      display: flex;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
   </style>
 </head>
 
@@ -200,6 +233,9 @@
     </div>
     <div id="console-output"></div>
   </div>
+
+  <!-- Reload button (shown when new version detected) -->
+  <button id="reload-button" title="New version available! Click to reload">🔄</button>
 
   <!-- Auto-versioned module loader (with silent fallback) -->
   <script>
