@@ -29,6 +29,7 @@ This is a template repository optimized for building web games for iOS devices. 
 - **File**: `.github/workflows/autopromote.yml`
 - Automatically merges `claude/**` branches into `main` when pushed
 - Enables seamless CI/CD workflow with Claude Code
+- ✅ **Copied with template** - Works immediately in new repos (requires Actions enabled)
 
 ### 2. Branch Cleanup Workflow
 - **File**: `.github/workflows/cleanup-old-branches.yml`
@@ -36,6 +37,7 @@ This is a template repository optimized for building web games for iOS devices. 
 - Only deletes branches older than 24 hours
 - Keeps your repository clean from stale Claude Code branches
 - Can be triggered manually via GitHub Actions UI
+- ✅ **Copied with template** - Works immediately in new repos (requires Actions enabled)
 
 ### 3. Cache Busting System
 - **File**: `version.txt` - Contains timestamp for cache invalidation
@@ -134,13 +136,27 @@ This copies the pre-commit hook from `hooks/pre-commit` to `.git/hooks/pre-commi
 ## Usage
 
 ### As a Template
-1. Use this repository as a template for new projects
+
+**What Gets Copied:**
+- ✅ All code files and folder structure
+- ✅ GitHub Actions workflows (`.github/workflows/`)
+- ✅ Hook installation script (`install-hooks.sh` and `hooks/`)
+- ✅ All configuration files
+
+**What Doesn't Get Copied:**
+- ❌ Git hooks (`.git/hooks/`) - must run `./install-hooks.sh`
+- ❌ Repository settings (branch protection, secrets, etc.)
+- ❌ Issues, PRs, releases, discussions
+
+**Setup Steps:**
+1. Click "Use this template" to create a new repository
 2. Clone your new repository
 3. **Run `./install-hooks.sh`** to set up the pre-commit hook (required for auto-reload)
    - Note: If using Claude Code, it will do this automatically on first run
-4. Update this CLAUDE.md with project-specific details
-5. Edit `main.js` to build your application (or add more modules)
-6. The cache busting and deployment workflows are ready to use
+4. Enable GitHub Actions if they're disabled (should be enabled by default)
+5. Update this CLAUDE.md with project-specific details
+6. Edit `main.js` to build your application (or add more modules)
+7. The cache busting and deployment workflows are ready to use
 
 ### Deployment
 1. Enable GitHub Pages in repository settings
