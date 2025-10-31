@@ -91,30 +91,35 @@ This is especially useful for PWA installations where users may keep the app ope
 
 **Overhead:** The overhead is minimal - version.txt is a tiny file (~20 bytes) and the fetch happens in the background. The network usage is negligible compared to typical game assets, rendering, and animations.
 
-### Pre-commit Hook (Recommended)
-Automatically update `version.txt` on each commit by creating `.git/hooks/pre-commit`:
+### Pre-commit Hook Setup (Required)
+To automatically update `version.txt` on each commit, run the install script once after cloning:
 
 ```bash
-#!/bin/sh
-# Update version.txt with current timestamp
-date +%s%3N > version.txt
-git add version.txt
+./install-hooks.sh
 ```
 
-Make it executable: `chmod +x .git/hooks/pre-commit`
+This copies the pre-commit hook from `hooks/pre-commit` to `.git/hooks/pre-commit` and makes it executable.
 
-**Why pre-commit over post-commit?**
-- Pre-commit includes the version.txt update IN the same commit
-- Post-commit would require a second commit to save the version change
-- Cleaner git history and ensures version.txt is always in sync
+**Why this is needed:**
+- Git hooks live in `.git/hooks/` which is never tracked in version control
+- Each repository clone needs the hook installed manually
+- The install script makes this a one-command setup
+- Without this, version.txt won't update and auto-reload won't work
+
+**What the hook does:**
+- Automatically updates version.txt with current timestamp on every commit
+- Includes version.txt in the same commit (pre-commit vs post-commit)
+- Ensures cleaner git history and version.txt is always in sync
 
 ## Usage
 
 ### As a Template
 1. Use this repository as a template for new projects
-2. Update this CLAUDE.md with project-specific details
-3. Edit `main.js` to build your application (or add more modules)
-4. The cache busting and deployment workflows are ready to use
+2. Clone your new repository
+3. **Run `./install-hooks.sh`** to set up the pre-commit hook (required for auto-reload)
+4. Update this CLAUDE.md with project-specific details
+5. Edit `main.js` to build your application (or add more modules)
+6. The cache busting and deployment workflows are ready to use
 
 ### Deployment
 1. Enable GitHub Pages in repository settings
@@ -155,13 +160,14 @@ To disable the console in production, simply remove the `console.js` import and 
 ├── .github/workflows/
 │   ├── autopromote.yml           # Auto-merge claude/** branches
 │   └── cleanup-old-branches.yml  # Daily cleanup of old claude branches
-├── .git/hooks/
-│   └── pre-commit                # Updates version.txt (create manually)
+├── hooks/
+│   └── pre-commit                # Pre-commit hook (installed via install-hooks.sh)
 ├── .gitignore                    # Git ignore patterns
 ├── CLAUDE.md                     # This file - project context for Claude
 ├── index.html                    # Entry point with iOS optimizations
 ├── main.js                       # Main application module (starter file)
 ├── console.js                    # In-page debug console
+├── install-hooks.sh              # One-command hook installation script
 ├── manifest.json                 # PWA manifest for iOS home screen
 ├── icon-512.svg                  # App icon (replace with your own)
 └── version.txt                   # Build version timestamp
