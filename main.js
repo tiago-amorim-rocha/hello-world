@@ -6,14 +6,21 @@ import * as debugConsole from './console.js';
 // Version checking configuration
 const VERSION_CHECK_INTERVAL = 2000; // Check every 2 seconds
 let currentVersion = window.__BUILD || 'unknown';
+let checkCounter = 0;
 
 // Check for version updates
 async function checkForUpdates() {
   try {
+    checkCounter++;
     const res = await fetch('./version.txt', { cache: 'no-store' });
     if (!res.ok) return;
 
     const latestVersion = (await res.text()).trim();
+
+    // Log every 10 checks
+    if (checkCounter % 10 === 0) {
+      console.log(`✅ Version check #${checkCounter}: current=${currentVersion}, latest=${latestVersion}`);
+    }
 
     if (latestVersion !== currentVersion) {
       console.log('🔄 New version detected!', { current: currentVersion, latest: latestVersion });
