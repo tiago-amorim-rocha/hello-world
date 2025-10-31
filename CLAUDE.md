@@ -34,7 +34,7 @@ This is a template repository optimized for building web games for iOS devices. 
 ### 5. Auto-Reload on Version Change
 - **Implementation**: `main.js` - Periodic version checking
 - Automatically detects when a new version is deployed
-- Checks `version.txt` every 30 seconds for updates
+- Checks `version.txt` every 2 seconds for updates
 - Shows a 🔄 reload button (left of debug console) when new version detected
 - Button pulses to draw attention to available update
 - Click to force reload and get the latest version
@@ -82,12 +82,14 @@ document.head.appendChild(s);
 ### Auto-Reload on Version Change
 The `main.js` module implements automatic version detection:
 1. Stores the initial version from `window.__BUILD` on page load
-2. Periodically checks `version.txt` every 30 seconds (configurable via `VERSION_CHECK_INTERVAL`)
+2. Periodically checks `version.txt` every 2 seconds (configurable via `VERSION_CHECK_INTERVAL`)
 3. Compares the fetched version with the current version
 4. When a mismatch is detected, shows a reload button to the left of the debug console
 5. User clicks the 🔄 button to force reload and get the latest version
 
 This is especially useful for PWA installations where users may keep the app open for extended periods without refreshing. The button appears automatically when a new deployment is detected.
+
+**Overhead:** The overhead is minimal - version.txt is a tiny file (~20 bytes) and the fetch happens in the background. The network usage is negligible compared to typical game assets, rendering, and animations.
 
 ### Pre-commit Hook (Recommended)
 Automatically update `version.txt` on each commit by creating `.git/hooks/pre-commit`:
