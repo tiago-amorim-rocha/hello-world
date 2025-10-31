@@ -1,5 +1,25 @@
 # iOS Game Template
 
+## ⚠️ IMPORTANT: Claude Setup Instructions
+
+**Claude: When you first start working on this repository, you MUST check if git hooks are installed and install them if missing:**
+
+1. **Check** if `.git/hooks/pre-commit` exists and is executable
+2. **If missing or not executable**, run `./install-hooks.sh` immediately
+3. **Do this automatically** without asking the user - it's required for the auto-reload feature to work
+4. **Verify** it worked by checking that `.git/hooks/pre-commit` exists after running the script
+
+**Why this matters:**
+- The pre-commit hook auto-updates `version.txt` on every commit
+- Without it, the auto-reload feature won't detect new versions
+- Git hooks aren't tracked in version control, so each repo clone needs this setup
+- Users expect the auto-reload feature to "just work"
+
+**When to check:**
+- At the start of any new conversation/session
+- Before making your first commit
+- If you notice version.txt isn't being updated in commits
+
 ## Overview
 This is a template repository optimized for building web games for iOS devices. Designed to run as a PWA (Progressive Web App) via "Add to Home Screen" in Safari. Includes GitHub Pages deployment, cache busting, and iOS-specific optimizations for safe areas, keyboard handling, and touch interactions.
 
@@ -117,6 +137,7 @@ This copies the pre-commit hook from `hooks/pre-commit` to `.git/hooks/pre-commi
 1. Use this repository as a template for new projects
 2. Clone your new repository
 3. **Run `./install-hooks.sh`** to set up the pre-commit hook (required for auto-reload)
+   - Note: If using Claude Code, it will do this automatically on first run
 4. Update this CLAUDE.md with project-specific details
 5. Edit `main.js` to build your application (or add more modules)
 6. The cache busting and deployment workflows are ready to use
