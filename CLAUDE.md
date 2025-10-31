@@ -31,7 +31,16 @@ This is a template repository optimized for building web games for iOS devices. 
 - Keeps last 100 messages in history
 - Useful for debugging on mobile devices or when DevTools isn't available
 
-### 5. iOS Game Optimizations
+### 5. Auto-Reload on Version Change
+- **Implementation**: `main.js` - Periodic version checking
+- Automatically detects when a new version is deployed
+- Checks `version.txt` every 30 seconds for updates
+- Shows a 🔄 reload button (left of debug console) when new version detected
+- Button pulses to draw attention to available update
+- Click to force reload and get the latest version
+- Perfect for PWA users who may not refresh the page regularly
+
+### 6. iOS Game Optimizations
 - **PWA Support**: manifest.json for "Add to Home Screen" functionality
 - **Safe Area Handling**: Automatic padding for notch, home indicator, and device edges
 - **Keyboard Protection**: Fixed viewport prevents keyboard from resizing game area
@@ -69,6 +78,16 @@ s.type = 'module';
 s.src = `./main.js?v=${encodeURIComponent(version)}`;
 document.head.appendChild(s);
 ```
+
+### Auto-Reload on Version Change
+The `main.js` module implements automatic version detection:
+1. Stores the initial version from `window.__BUILD` on page load
+2. Periodically checks `version.txt` every 30 seconds (configurable via `VERSION_CHECK_INTERVAL`)
+3. Compares the fetched version with the current version
+4. When a mismatch is detected, shows a reload button to the left of the debug console
+5. User clicks the 🔄 button to force reload and get the latest version
+
+This is especially useful for PWA installations where users may keep the app open for extended periods without refreshing. The button appears automatically when a new deployment is detected.
 
 ### Pre-commit Hook (Recommended)
 Automatically update `version.txt` on each commit by creating `.git/hooks/pre-commit`:
